@@ -1,0 +1,226 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.bp.ist</groupId>
+        <artifactId>dps</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>dps-model</artifactId>
+    <name>dps-model</name>
+    <dependencies>
+        <!-- Import the EJB API, we use provided scope as the API is included in JBoss EAP 6 -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- orika mapper -->
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+        </dependency>
+        
+        <!-- hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.1.2</version>
+        </dependency>
+        
+        <!-- javax.persistence -->		
+		<!-- <dependency>
+			<groupId>javax.persistence</groupId>	
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
+		</dependency> -->
+		
+		<!-- hibernate javax persistence -->
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+		
+		<!-- logging-->
+		<dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${version.dps.ejb.commons.logging}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+		
+		<!-- jboss persistence api -->
+		<!-- <dependency>
+			<groupId>org.jboss.javaee</groupId>
+			<artifactId>jboss-persistence-api</artifactId>
+			<version>3.0.0.20070913080910</version>
+		</dependency> -->
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+       <!-- <plugin>
+       <groupId>org.codehaus.mojo</groupId>
+       <artifactId>hibernate3-maven-plugin</artifactId>
+       <version>2.2</version>
+         <configuration>
+           <components>
+             <component>
+               <name>hbm2hbmxml</name>
+               <implementation>configuration</implementation>
+               <outputDirectory>target/generated-resources/hibernate3</outputDirectory>
+             </component>
+             <component>
+               <name>hbm2java</name>
+               <implementation>jdbcconfiguration</implementation>
+               <outputDirectory>target/generated-sources/hibernate3</outputDirectory>
+             </component>
+           </components>
+           <componentProperties>
+             <revengfile>src/main/resources/reveng.xml</revengfile>
+             <propertyfile>src/main/resources/hibernate.properties</propertyfile>
+             <packagename>com.it.bp.dps.domain.entity</packagename>
+             <jdk5>true</jdk5>
+             <ejb3>true</ejb3>
+           </componentProperties>
+         </configuration>
+         <dependencies>
+           <dependency>
+             <groupId>cglib</groupId>
+             <artifactId>cglib-nodep</artifactId>
+             <version>2.2.2</version>
+           </dependency>
+           <dependency>
+             <groupId>com.oracle</groupId>
+             <artifactId>ojdbc6</artifactId>
+             <version>11.2.0.3.0</version>
+           </dependency>
+         </dependencies>
+       </plugin> -->
+       
+    <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>hibernate3-maven-plugin</artifactId>
+    <version>2.2</version>
+    <executions>
+      <execution>
+        <!-- <id>generate-xml-files</id> -->
+        <id>hbm2cfgxml</id>
+        <phase>generate-resources</phase>
+        <goals>
+          <!-- <goal>hbm2hbmxml</goal> -->
+          <goal>hbm2cfgxml</goal>
+        </goals>
+        <inherited>false</inherited>
+        <configuration>
+        	<components>
+        		<component>
+        			<name>hm2cfgxml</name>
+        			<implementation>jdbcconfiguration</implementation>
+        		</component>
+        	</components>
+        	<componentProperties>
+        		<packagename>com.it.bp.domain.entity</packagename>
+        	</componentProperties>
+        </configuration>
+      </execution>
+      <execution>
+      	<id>hbm2hbmxml</id>
+      	<phase>generate-resources</phase>
+      	<goals>
+          <goal>hbm2hbmxml</goal>
+        </goals>
+        <inherited>false</inherited>
+        <configuration>
+        	<components>
+        		<component>
+        			<name>hm2hbmxml</name>
+        			<outputDirectory>target/classes</outputDirectory>
+        		</component>
+        	</components>
+        	<componentProperties>
+        		<packagename>com.it.bp.domain.entity</packagename>
+        	</componentProperties>
+        </configuration>
+      </execution>
+      <execution>
+      	<id>hbm2java</id>
+      	<phase>generate-sources</phase>
+      	<goals>
+          <goal>hbm2java</goal>
+        </goals>
+        <inherited>false</inherited>
+        <configuration>
+        	<components>
+        		<component>
+        			<name>hbm2java</name>
+        			<implementation>configuration</implementation>
+        		</component>
+        	</components>
+        	<componentProperties>
+        		<packagename>com.it.bp.domain.entity</packagename>
+        		<configurationfile>target/hibernate3/generated-mappings/hibernate.cfg.xml</configurationfile>
+        		<revengfile>src/main/resources/reveng.xml</revengfile>
+		        <propertyfile>src/main/resources/hibernate.properties</propertyfile>
+		        <jdk5>true</jdk5>
+		        <ejb3>true</ejb3>
+		        <format>true</format>
+		        <haltonerror>true</haltonerror>
+        	</componentProperties>
+        </configuration>
+      </execution>
+    </executions>
+    <dependencies>
+		<dependency>
+    		<groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>2.2.2</version>
+		</dependency>
+        <dependency>
+	        <!-- <groupId>org.apache.derby</groupId>
+	        <artifactId>derby</artifactId>
+	        <version>10.5.3.0_1</version> -->
+	        <groupId>com.oracle</groupId>
+	        <artifactId>ojdbc6</artifactId>
+	        <version>11.2.0.3.0</version>
+      </dependency>
+    </dependencies>
+  </plugin>
+</plugins>
+	<resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                    <!-- <include>**/*.xml</include>
+                    <include>**/*.xsd</include> -->
+                </includes>
+            </resource>
+            <!-- <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.properties</exclude>
+                    <exclude>**/*.xml</exclude>
+                    <exclude>**/*.xsd</exclude>
+                </excludes>
+            </resource> -->
+        </resources>
+    </build>
+</project>

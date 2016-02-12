@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="ApplicationsPersistenceUnit"
+		transaction-type="JTA">
+
+		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+		<jta-data-source>osgi:service/javax.sql.DataSource/(osgi.jndi.service.name=jdbc/AppDataSource)</jta-data-source>
+		<non-jta-data-source>osgi:service/javax.sql.DataSource/(osgi.jndi.service.name=jdbc/TransientDataSource)
+        </non-jta-data-source>
+
+		<class>com.it.bp.dps.domain.entity.base.BaseTable</class>
+		<class>com.it.bp.dps.domain.entity.DebrkBrokerageDBO</class>
+		<class>com.it.bp.dps.domain.entity.DechaChainDBO</class>
+		<class>com.it.bp.dps.domain.entity.DechnChainDetailsDBO</class>
+		<class>com.it.bp.dps.domain.entity.DeconConversionBasisDBO</class>
+		<class>com.it.bp.dps.domain.entity.DedchDerivsChainDBO</class>
+		<class>com.it.bp.dps.domain.entity.DedelDealsDBO</class>
+		<class>com.it.bp.dps.domain.entity.DederDerivsDealsDBO</class>
+		<class>com.it.bp.dps.domain.entity.DedreDealRelationsDBO</class>
+		<class>com.it.bp.dps.domain.entity.DefelFsaEmailLogDBO</class>
+		<class>com.it.bp.dps.domain.entity.DefxdFixedDatesDBO</class>
+		<class>com.it.bp.dps.domain.entity.DehlsHeadlineStatesDBO</class>
+		<class>com.it.bp.dps.domain.entity.DemrlMsgRepublishLogDBO</class>
+		<class>com.it.bp.dps.domain.entity.DentsNoteSectionsDBO</class>
+		<class>com.it.bp.dps.domain.entity.DeofsFinSwapSettlesDBO</class>
+		<class>com.it.bp.dps.domain.entity.DepflFloatingPricingDBO</class>
+		<class>com.it.bp.dps.domain.entity.DepliPricingLinesDBO</class>
+		<class>com.it.bp.dps.domain.entity.DeprcPricingDBO</class>
+		<class>com.it.bp.dps.domain.entity.DeprfFixedPricingDBO</class>
+		<class>com.it.bp.dps.domain.entity.DeprtPricingTermDBO</class>
+		<class>com.it.bp.dps.domain.entity.DeschSearchDealsDBO</class>
+		<class>com.it.bp.dps.domain.entity.DescoSettlementConvsDBO</class>
+		<class>com.it.bp.dps.domain.entity.DesetSettlementTermsDBO</class>
+		<class>com.it.bp.dps.domain.entity.DeswsSwapSettlementsDBO</class>
+		<class>com.it.bp.dps.domain.entity.DetrsTrckEventStatesDBO</class>
+		<class>com.it.bp.dps.domain.entity.DexcrExtendedCreditDBO</class>
+		<class>com.it.bp.dps.domain.entity.NgaufAuditFieldDBO</class>
+		<class>com.it.bp.dps.domain.entity.NgauoAuditObjectDBO</class>
+		<class>com.it.bp.dps.domain.entity.NgautAuditTransactionDBO</class>
+		<class>com.it.bp.dps.domain.entity.NgmigMigEventsDBO</class>
+		<class>com.it.bp.dps.domain.entity.NgproProcessedEventsDBO</class>
+		<class>com.it.bp.dps.domain.entity.NgpubPubEventsDBO</class>
+		<class>com.it.bp.dps.domain.entity.SkipMessagesDBO</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+
+		<properties>
+			<!-- need to test run and validate these properties -->
+			<property name="openjpa.RuntimeUnenhancedClasses" value="unsupported" />
+			<property name="openjpa.DataCache" value="false" />
+			<property name="openjpa.QueryCache" value="false" />
+			<property name="openjpa.jdbc.DBDictionary" value="BatchLimit=100" />
+			<property name="openjpa.jdbc.QuerySQLCache" value="false" />
+			<property name="openjpa.jdbc.SynchronizeMappings" value="validate" />
+            <property name="openjpa.jdbc.DBDictionary" value="oracle(batchLimit=-1)"/>
+            <property name="openjpa.jdbc.QuerySQLCache" value="true"/>
+            <property name="openjpa.DataCache" value="true(CacheSize=5000, SoftReferenceSize=0)"/>
+            
+		</properties>
+
+	</persistence-unit>
+</persistence>

@@ -1,0 +1,10 @@
+How to Run this file.
+
+mvn hibernate3:hbm2java (no space between hibernate3 & hbm2java)
+
+If you want to generate mapping files and POJOs without annotations. change the <ejb3> tag in the pom.xml to the following.
+
+<ejb3>false</ejb3>
+
+mvn hibernate3:hbm2hbmxml 
+mvn hibernate3:hbm2java
